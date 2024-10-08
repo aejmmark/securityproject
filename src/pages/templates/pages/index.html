@@ -1,13 +1,42 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>Website</title>
-    </head>
     <body>
-        <p>TEST TEXT</p>
+        <h1>Notes app</h1>
+
+        <table>
+        <tr>
+        <th style="text-align:left">Username: <td>{{user.username}} 
+        </table>
+
+
+        <form action='logout/' method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Logout"/>
+        </form>
+        
+        <h2>Your notes</h2>
+
+        <table>
+        {% for note in notes %}
+        <tr>
+        <td>
+        {{note.text}}
+        <td>
+        <form action='deleteNote/' method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{note.id}}" />
+            <input type="submit" value="Delete"/>
+        </form>
+
+        {% endfor %}
+        </table>
+
+        <h2>Add note</h2>
+
+        <form action='addNote/' method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="note" id="note"/>
+            <input type="submit" value="Add"/>
+        </form>
     </body>
-    <form action='logout/' method="POST">
-        {% csrf_token %}
-        <input type="submit" value="Logout"/>
-    </form>
 </html>
