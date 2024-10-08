@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.db import connection
 from .models import Note
 
 def createUserView(request):
@@ -20,19 +17,44 @@ def createUserView(request):
 @login_required
 def deleteNoteView(request):
 	n = Note.objects.get(pk=request.POST.get('id'))
-	if n.owner==request.user:
+	if n.owner==request.user.id:
 		n.delete()
 	return redirect('/')
 
 @login_required
 def addNoteView(request):
 	text = request.POST.get('note')
-	n = Note(owner=request.user, text=text)
-	n.save()
+	id = request.user.id
+	query = "INSERT INTO pages_note (owner, text) VALUES (" + str(id) + ",'" + text + "')"
+	print(query)
+	connection.cursor().execute(query)
 	return redirect('/')
 
 @login_required
 def homePageView(request):
-	notes = Note.objects.filter(owner=request.user)
-	#uploads = [{'id': n.id, 'text': n.text} for n in notes]	
+	notes = Note.objects.filter(owner=request.user.id)
 	return render(request, 'pages/index.html', {'notes': notes})
+
+#@login_required
+#def deleteNoteView(request):
+#	n = Note.objects.get(pk=request.POST.get('id'))
+#	if n.owner==request.user:
+#		n.delete()
+#	return redirect('/')
+#
+#@login_required
+#def addNoteView(request):
+#	text = request.POST.get('note')
+#	n = Note(owner=request.user.id, text=text)
+#	n.save()
+#	return redirect('/')
+#
+#@login_required
+#def homePageView(request):
+#	notes = Note.objects.filter(owner=request.user.id)
+#	return render(request, 'pages/index.html', {'notes': notes})
+
+#conn = sqlite3.connect(name)
+#agents = read_database(conn)
+#result = conn.execute("SELECT id, name FROM Agent ORDER BY id")
+#agents = result.fetchall()
