@@ -7,7 +7,11 @@
         <tr>
         <th style="text-align:left">Username: <td>{{user.username}} 
         </table>
-
+        {% if user.is_superuser %} 
+        <a href="/logs/">Log page</a>
+        {% else %}
+        <div></div>
+        {% endif %}
 
         <form action='logout/' method="POST">
             {% csrf_token %}
