@@ -1,18 +1,49 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from django.db import connection
 from .models import Note, Log
 from django.contrib.auth.models import User
+from django import forms
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=150, label='username')
+    password = forms.CharField(widget=forms.PasswordInput, label='password')
+
+def loginView(request):
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			username = form.cleaned_data.get('username')
+			password = form.cleaned_data.get('password')
+			user = User.objects.get(username=username)
+			if user.password == password:
+				login(request, user)
+				return redirect('/')
+	else:
+		form = LoginForm()
+	return render(request, 'pages/login.html', {'form': form})
 
 def createUserView(request):
 	if request.method == "POST":
 		form = UserCreationForm(request.POST)
 		if form.is_valid():
-			form.save()
+			username = form.cleaned_data.get('username')
+			password = form.cleaned_data.get('password1')
+			user = User(username=username)
+			user.password = password
+			user.save()
 			return redirect('/login/')
 	else:
 		form = UserCreationForm()
+	#if request.method == "POST":
+	#	form = UserCreationForm(request.POST)
+	#	if form.is_valid():
+	#		form.save()
+	#		return redirect('/login/')
+	#else:
+	#	form = UserCreationForm()
 	return render(request, 'pages/createUser.html', { "form" : form})
 
 @login_required
