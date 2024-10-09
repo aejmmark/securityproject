@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.db import connection
 from .models import Note, Log
+from django.contrib.auth.models import User
 
 def createUserView(request):
 	if request.method == "POST":
@@ -50,7 +51,8 @@ def logView(request):
 	#else:
 	#	return redirect('/')
 	logs = Log.objects.all()
-	return render(request, 'pages/logs.html', {'logs': logs})
+	users = User.objects.all()
+	return render(request, 'pages/logs.html', {'logs': logs, 'users': users})
 
 def logAction(id, action):
 	log = Log(user_id=id, action=action)
