@@ -44,7 +44,7 @@ def createUserView(request):
 	#		return redirect('/login/')
 	#else:
 	#	form = UserCreationForm()
-	return render(request, 'pages/createUser.html', { "form" : form})
+	#return render(request, 'pages/createUser.html', { "form" : form})
 
 @login_required
 def deleteNoteView(request):

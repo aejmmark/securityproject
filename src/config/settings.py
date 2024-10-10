@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'axes',
     'src.pages'
 ]
 
@@ -49,18 +48,40 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'axes.middleware.AxesMiddleware',
 
 ]
 
-AUTHENTICATION_BACKENDS = [
-    'axes.backends.AxesBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]
-
-AXES_FAILURE_LIMIT = 5
-AXES_LOCKOUT_PARAMETERS = ['username']
-AXES_COOLOFF_TIME = 1
+#INSTALLED_APPS = [
+#    'django.contrib.admin',
+#    'django.contrib.auth',
+#    'django.contrib.contenttypes',
+#    'django.contrib.sessions',
+#    'django.contrib.messages',
+#    'django.contrib.staticfiles',
+#    'axes',
+#    'src.pages'
+#]
+#
+#MIDDLEWARE = [
+#    'django.middleware.security.SecurityMiddleware',
+#    'django.contrib.sessions.middleware.SessionMiddleware',
+#    'django.middleware.common.CommonMiddleware',
+#    'django.middleware.csrf.CsrfViewMiddleware',
+#    'django.contrib.auth.middleware.AuthenticationMiddleware',
+#    'django.contrib.messages.middleware.MessageMiddleware',
+#    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#    'axes.middleware.AxesMiddleware',
+#
+#]
+#
+#AUTHENTICATION_BACKENDS = [
+#    'axes.backends.AxesBackend',
+#    'django.contrib.auth.backends.ModelBackend',
+#]
+#
+#AXES_FAILURE_LIMIT = 5
+#AXES_LOCKOUT_PARAMETERS = ['username']
+#AXES_COOLOFF_TIME = 1
 
 ROOT_URLCONF = 'src.config.urls'
 
