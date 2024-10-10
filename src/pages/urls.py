@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import homePageView, createUserView, deleteNoteView, addNoteView, logView, loginView
-#remove loginView import
+#from .views import homePageView, createUserView, deleteNoteView, addNoteView, logView
 
 urlpatterns = [
     path('', homePageView, name='home'),
