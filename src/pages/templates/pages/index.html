@@ -27,7 +27,7 @@
         {{note.text}}
         <td>
         <form action='deleteNote/' method="POST">
-            {% csrf_token %}
+            
             <input type="hidden" name="id" value="{{note.id}}" />
             <input type="submit" value="Delete"/>
         </form>
