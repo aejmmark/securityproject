@@ -81,10 +81,11 @@ def logView(request):
 	#	return render(request, 'pages/logs.html', {'logs': logs})
 	#else:
 	#	return redirect('/')
-	logs = Log.objects.all()
+	#logs = Log.objects.all()
+	logs = []
 	users = User.objects.all()
 	return render(request, 'pages/logs.html', {'logs': logs, 'users': users})
 
-def logAction(id, action):
-	log = Log(user_id=id, action=action)
-	log.save()
+#def logAction(id, action):
+#	log = Log(user_id=id, action=action)
+#	log.save()
