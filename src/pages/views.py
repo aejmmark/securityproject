@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.db import connection
@@ -46,6 +47,7 @@ def createUserView(request):
 	#	form = UserCreationForm()
 	return render(request, 'pages/createUser.html', { "form" : form})
 
+@csrf_exempt
 @login_required
 def deleteNoteView(request):
 	n = Note.objects.get(pk=request.POST.get('id'))
